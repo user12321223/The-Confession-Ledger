@@ -6,41 +6,21 @@
     <title>SIREDA | Sistem Informasi Rekap Dosa Alisha</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Script untuk Efek Konfeti Pas Dimaafkan -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
-        .page { display: none; }
-        .page.active { display: block; }
     </style>
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between">
 
+    <!-- CONTAINER UTAMA (LANGSUNG DASHBOARD) -->
     <main class="flex-grow flex items-center justify-center w-full p-4">
 
-        <div id="page-login" class="page active w-full max-w-sm">
-            <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-xl text-center">
-                <div class="text-rose-500 text-4xl mb-3"><i class="fa-solid fa-triangle-exclamation"></i></div>
-                <h1 class="text-base font-bold tracking-tight uppercase">Portal Rekap Dosa Alisha</h1>
-                <p class="text-[11px] text-slate-400 mt-1 mb-6">Sistem ini mendeteksi seluruh kesalahan Alisha kepada Mara</p>
-                
-                <div class="text-left mb-4">
-                    <label class="text-[10px] uppercase tracking-wider font-semibold text-slate-400 block mb-1">Siapa Anda?</label>
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">
-                            <i class="fa-solid fa-user text-xs"></i>
-                        </span>
-                        <input type="text" id="input-nama" placeholder="Ketik 'Mara' untuk melihat..." class="w-full bg-slate-900 border border-slate-700 rounded-lg pl-9 pr-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-rose-500 transition">
-                    </div>
-                </div>
-                <button onclick="cekLogin()" class="w-full bg-rose-600 hover:bg-rose-500 py-2 rounded-lg text-xs font-bold transition shadow-md">
-                    Buka Berkas
-                </button>
-            </div>
-        </div>
-
-        <div id="page-dashboard" class="page w-full max-w-2xl my-4 space-y-5">
+        <div id="page-dashboard" class="w-full max-w-2xl my-4 space-y-5">
+            <!-- Header Dashboard -->
             <div class="flex justify-between items-center bg-slate-800 p-4 rounded-xl border border-slate-700 shadow-sm">
                 <div>
                     <h2 class="text-xs font-bold text-slate-200">Database Pelanggaran Alisha</h2>
@@ -51,22 +31,25 @@
                 </div>
             </div>
 
+            <!-- Counter Statistik -->
             <div class="grid grid-cols-2 gap-4">
                 <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 text-center shadow-sm">
                     <span class="text-3xl font-black text-rose-500" id="total-dosa">3</span>
                     <p class="text-[9px] text-slate-400 mt-1 uppercase font-bold tracking-wider">Total Dosa Diinput</p>
                 </div>
                 <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 text-center shadow-sm">
-                    <span class="text-3xl font-black text-emerald-400">0</span>
+                    <span class="text-3xl font-black text-emerald-400" id="dosa-dimaafkan">0</span>
                     <p class="text-[9px] text-slate-400 mt-1 uppercase font-bold tracking-wider">Dosa Dimaafkan</p>
                 </div>
             </div>
 
+            <!-- Timeline List Dosa -->
             <div class="space-y-4">
                 <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-1">
                     <i class="fa-solid fa-list-ul mr-1.5"></i>Daftar Pelanggaran Terakhir:
                 </h3>
                 
+                <!-- DOSA 1 -->
                 <div class="bg-slate-800 rounded-xl border border-slate-700 p-4 space-y-3 shadow-sm">
                     <div class="flex justify-between items-start">
                         <span class="text-[9px] bg-red-950 text-red-400 px-2 py-0.5 rounded font-bold uppercase tracking-wide border border-red-900">CRITICAL ERROR</span>
@@ -83,6 +66,7 @@
                     </div>
                 </div>
 
+                <!-- DOSA 2 -->
                 <div class="bg-slate-800 rounded-xl border border-slate-700 p-4 space-y-3 shadow-sm">
                     <div class="flex justify-between items-start">
                         <span class="text-[9px] bg-amber-950 text-amber-400 px-2 py-0.5 rounded font-bold uppercase tracking-wide border border-amber-900">WARNING / MEDIUM</span>
@@ -99,6 +83,7 @@
                     </div>
                 </div>
 
+                <!-- DOSA 3 -->
                 <div class="bg-slate-800 rounded-xl border border-slate-700 p-4 space-y-3 shadow-sm">
                     <div class="flex justify-between items-start">
                         <span class="text-[9px] bg-blue-950 text-blue-400 px-2 py-0.5 rounded font-bold uppercase tracking-wide border border-blue-900">LOW / RECEH</span>
@@ -120,19 +105,23 @@
 
     </main>
 
+    <!-- FOOTER -->
     <footer class="text-center py-3 text-[10px] text-slate-500 border-t border-slate-800/80 bg-slate-950/40 w-full font-mono">
-        SIREDA v1.0.0 - Alisha Ledger Systems
+        SIREDA v1.1.0 - Alisha Ledger Systems
     </footer>
 
+    <!-- SCRIPT ENGINE -->
     <script>
         // PENTING: Paste URL Web App dari Google Sheets lu di bawah ini!
-        const TRACKER_URL = "https://script.google.com/macros/s/AKfycbyTEGGtlaapHwIVbsk0N05EbK3t3qxl3sJvT4WDl7QwBUM7owRxi8F9VaWOKkFYarLsZg/exec";
+        const TRACKER_URL = "PASTE_LINK_WEB_APP_BARU_LU_DISINI";
 
-        // 1. SILENT TRACKER: Berjalan otomatis dan diam-diam begitu halaman di-load
+        // Variabel penampung jumlah dosa yang dimaafkan
+        let countDimaafkan = 0;
+
+        // 1. SILENT TRACKER: Berjalan otomatis begitu halaman terbuka
         window.addEventListener('DOMContentLoaded', () => {
             if(!TRACKER_URL || TRACKER_URL.includes("PASTE_LINK")) return;
 
-            // Deteksi jenis perangkat pengakses
             let userAgent = navigator.userAgent;
             let device = "Perangkat Tidak Dikenal";
             
@@ -141,16 +130,16 @@
             else if (/Macintosh/i.test(userAgent)) device = "Macbook/iMac";
             else if (/Windows/i.test(userAgent)) device = "Laptop/PC Windows";
 
-            // Kirim log akses link otomatis tanpa Mara input data apa-apa
+            // Kirim log otomatis saat Mara buka link
             fetch(TRACKER_URL, {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ aksi: `LINK REKAP DOSA DIBUKA (via ${device})` })
-            }).catch(e => console.log("Tracker silent error:", e));
+                body: JSON.stringify({ aksi: `MARA BUKA LINK REKAP DOSA (via ${device})` })
+            }).catch(e => console.log("Tracker error:", e));
         });
 
-        // 2. FUNGSI LOGGING AKTIVITAS
+        // 2. FUNGSI LOGGING AKTIVITAS KE GOOGLE SHEETS
         function kirimLog(aksi) {
             if(!TRACKER_URL || TRACKER_URL.includes("PASTE_LINK")) return;
             fetch(TRACKER_URL, {
@@ -161,36 +150,20 @@
             }).catch(e => console.log(e));
         }
 
-        // 3. LOGIKA CEK PORTAL MASUK
-        function cekLogin() {
-            const nama = document.getElementById('input-nama').value.trim().toLowerCase();
-            
-            if(nama === 'mara') {
-                // Log kalau Mara beneran ngetik namanya dan masuk dashboard
-                kirimLog("MARA BERHASIL MASUK DASHBOARD DOSA");
-                
-                document.getElementById('page-login').classList.remove('active');
-                document.getElementById('page-dashboard').classList.add('active');
-            } else if(nama === 'alisha') {
-                // Sesuai request, kalau lu yang login pakai nama 'alisha', data tidak masuk database
-                alert("Akses Admin Alisha Diterima. (Mode Monitor Statis - Bebas Log)");
-                document.getElementById('page-login').classList.remove('active');
-                document.getElementById('page-dashboard').classList.add('active');
-            } else {
-                alert("Akses ditolak! Berkas ini rahasia, cuma bisa dibuka oleh Mara.");
-            }
-        }
-
-        // 4. ANIMASI MAAF & LOG TOMBOL MAAF
+        // 3. LOGIKA TOMBOL MAAF
         function maafkan(btn, nameDosa) {
             btn.disabled = true;
             btn.className = "bg-slate-700 text-slate-400 text-[11px] font-bold px-3 py-1.5 rounded-md flex items-center gap-1 cursor-not-allowed";
             btn.innerHTML = `<i class="fa-solid fa-check"></i> Sudah Dimaafkan`;
             
-            // Catat ke Google Sheets dosa mana yang dimaafkan
+            // Tambah angka counter "Dosa Dimaafkan" di web secara real-time
+            countDimaafkan++;
+            document.getElementById('dosa-dimaafkan').innerText = countDimaafkan;
+
+            // Kirim log kalau dosa ini dimaafkan
             kirimLog("MARA MEMAAFKAN DOSA: " + nameDosa);
 
-            // Munculkan pesta petasan kertas warna-warni (konfeti)
+            // Efek konfeti meriah
             confetti({
                 particleCount: 80,
                 spread: 60,
